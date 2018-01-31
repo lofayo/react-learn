@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>12 ES6对象键值对的缩写</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var HelloMessage = React.createClass({
+        getInitialState() {
+          return {
+            name: 'lofayo'
+          }
+        },
+        render() {
+          return (
+            <section>
+              <p>ES6对象键值对的缩写</p>
+              <h3>{this.state.name}</h3>
+            </section>
+          );
+        }
+      });
+      
+      // class HelloMessage extends React.component {
+      //   getInitialState() {
+      //     return {
+      //       name: 'lofayo'
+      //     }
+      //   }
+      //   render() {
+      //     return (
+      //       <section>
+      //         <p>ES6对象键值对的缩写</p>
+      //         <h3>{this.state.name}</h3>
+      //       </section>
+      //     );
+      //   }        
+      // }
+
+      ReactDOM.render(
+        <HelloMessage />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

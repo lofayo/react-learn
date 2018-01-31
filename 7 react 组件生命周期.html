@@ -39,6 +39,7 @@
 
       	//组件接收新属性，而不是初始属性
         //一个组件改变的状态值赋给另一个组件的属性，导致属性跟随状态的改变
+        // 组件的属性与状态的改变都会促使组件再次渲染
       	componentWillReceiveProps: function(newProps){
       		console.log('Component will receive props !');
       	},
@@ -51,6 +52,7 @@
       	componentWillUpdate: function(newProps, newState){
       		console.log('Component will update !');
       	},
+
 
       	componentDidUpdate: function(prevProps, prevState){
       		console.log('Component did update !');

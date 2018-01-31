@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>14 todo list</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      {/*
+        1、this.setState(updater[, callback])方法的两种调用形式，
+        2、如果updater是个函数updater(prevState, prevProps)，但是函数中设置与prevstate无关，那又何必用这种方法
+        3、组件分工实现功能，通过props对象和state对象来传递值
+      */}
+      var TodoApp = React.createClass({
+        getInitialState() {
+          return {
+            value: '输入一条记录',
+            items: []
+          }
+        },
+        inputChange(e) {
+          this.setState({
+            value: e.target.value
+          })
+        },
+        formSubmit(e) {
+          // 阻止事件默认行为，阻止表单提交
+          e.preventDefault();
+          // 判断添加的值不能为空
+          if (!this.state.value) {
+            return;
+          }
+          // 数组的concat方法才可用
+          this.setState({
+            items: this.state.items.concat(<li>{this.state.value}</li>)
+          }, () => console.log(this.state.items))
+        },
+        render() {
+          return (
+            <div>
+              <TodoList items={this.state.items} />
+              <form onSubmit={this.formSubmit}>
+                <input type='text' value={this.state.value} onChange={this.inputChange} />
+                <button type='submit'>添加记录</button>
+              </form>
+            </div>
+          )
+        }
+      });
+      var TodoList = React.createClass({
+        render() {
+          return (
+            <div>
+              <h3>TodoList</h3>
+              <ul>{this.props.items}</ul>
+            </div>
+          )
+        }
+      });
+      ReactDOM.render(
+        <TodoApp />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

@@ -6,26 +6,26 @@
     <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
     <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
     <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
   </head>
   <body>
     <div id="example"></div>
     <script type="text/babel">
       var HelloMessage = React.createClass({
-        getInitialState: function(){
+        getInitialState(){
           return {
             value:0
           }
         },
         
         //react事件中this的指向
-        changeValue: function(event){
+        changeValue(event){
+          console.log(event.target.value);
           this.setState({
             value: event.target.value
           });
         },
 
-        render: function(){
+        render(){
           return (
             <div>
               <input type='text' value = {this.state.value} onChange = {this.changeValue} />

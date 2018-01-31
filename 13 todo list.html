@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>13 todo list</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      {/*
+        1、同样是数组，js的数组方法可能并不适用于react
+        2、HTML标签里的变量都是用大括号括起
+        3、有时所想的方式可能能实现，但一开始最好走正规方法
+      */}
+      var Todo = React.createClass({
+        getInitialState() {
+          return {
+            value: '请输入事项',
+            items: []
+          }
+        }, 
+        addItem() {
+          // this.state.items.push(<li>{this.refs.myInput.value}</li>);
+          console.log(Array.isArray(this.state.items))
+          this.setState({
+            items: this.state.items.concat(<li>{this.refs.myInput.value}</li>)
+          }, function(){
+            console.log(this.state.items);
+          })
+        },
+        inputChange(e)  {
+          this.setState({
+            value: e.target.value
+          })
+        },
+        render() {
+          return (
+            <div>
+              <ul>{this.state.items}</ul>
+              <input ref="myInput" value={this.state.value} onChange={this.inputChange} />
+              <button onClick={this.addItem}>增加事项</button>
+            </div>
+          )
+        }
+      });
+      ReactDOM.render(
+        <Todo />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
