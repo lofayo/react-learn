@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ES6 class</title>
+</head>
+<body>
+	<script>
+		'use strict';
+
+		class Point {
+			constructor(x,y) {
+				this.x = x;
+				this.y = y;
+			}
+
+			toString() {
+				console.log(this.y);
+			}
+
+			other() {
+				console.log(this.x);
+			}
+		}
+		// 这个例子证明：虽然浏览器的命令控制台能测试某些东西，但测试js最好的选择还是新建demo
+		console.log(typeof Point);
+		console.log(Point === Point.prototype.constructor);
+		let p = new Point(1,2);
+		p.toString();
+		p.other();
+		console.log(p.constructor === Point.prototype.constructor);
+
+		console.log(!!0, !![], []==0, []==[]);
+
+		// log(1, 2);error	
+	</script>
+</body>
+</html>

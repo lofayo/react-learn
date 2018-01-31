@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>10 react 表单与事件2</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //父组件中的属性、事件作为子组件的属性传入到子组件的渲染模板中
+
+    //子组件
+      var Content = React.createClass({
+        render: function(){
+          return (
+            <div>
+              <input type = 'text' value = {this.props.valueProp} onChange = {this.props.eventProp} />  
+              <h3>{this.props.valueProp}</h3>
+            </div>    
+          );
+        }
+      });
+
+    //父组件
+      var HelloMessage = React.createClass({
+        getInitialState: function(){
+          return {
+            value:0
+          }
+        },
+        
+        //react事件中this的指向
+        changeValue: function(event){
+          this.setState({
+            value: event.target.value
+          });
+        },
+
+        render: function(){
+          return <Content valueProp = {this.state.value} eventProp = {this.changeValue} />;
+        }
+      });
+
+      ReactDOM.render(
+        <HelloMessage />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

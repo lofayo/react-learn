@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>9 react 表单与事件</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var HelloMessage = React.createClass({
+        getInitialState: function(){
+          return {
+            value:0
+          }
+        },
+        
+        //react事件中this的指向
+        changeValue: function(event){
+          this.setState({
+            value: event.target.value
+          });
+        },
+
+        render: function(){
+          return (
+            <div>
+              <input type='text' value = {this.state.value} onChange = {this.changeValue} />
+              {/*以下方式却不能输入*/}
+              {/*<input type='text' value = 'please' onChange = {this.changeValue} />*/}
+
+              {/*这样却可以*/}
+              {/*<input type='text' onChange = {this.changeValue} />*/}
+              <h3>{this.state.value}</h3>
+            </div>
+          );
+        }
+      })
+
+
+      ReactDOM.render(
+        <HelloMessage />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

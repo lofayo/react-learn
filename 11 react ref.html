@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>11 react ref</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var HelloMessage = React.createClass({
+        focus: function(event){
+          //渲染组件中的refs属性获取DOM实例
+          this.refs.myInput.focus();
+        },
+
+        render: function(){
+          return (
+            <div>
+              <input type = 'text' ref = 'myInput' />
+              <input type = 'button' value = '点我，使输入框获取焦点' onClick = {this.focus} />
+            </div>
+          )
+        }
+      });
+
+      ReactDOM.render(
+        <HelloMessage />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

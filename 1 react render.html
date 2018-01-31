@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>1 react render</title>
+</head>
+
+<body>
+    <div id="example"></div>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script type="text/babel">
+        // 从这个例子看来，引入第三方JS文件，其实可以在只要能引入js的地方都能引入react代码。就算是混合式开发
+        ReactDOM.render(
+            <h1>hello world!</h1>,
+            document.getElementById('example')
+        );
+    </script>
+</body>
+
+</html>

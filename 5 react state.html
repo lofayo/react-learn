@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>4 react 复合组件</title>
+</head>
+
+<body>
+    <div id="example"></div>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script type="text/babel">
+        //组件，完整的系统。包含初始状态、事件触发对状态的改变、以及最后的渲染UI
+        //组件里每次改变了状态，渲染函数都会执行一次；
+        //而且this.setState(updater[,callback])方法也是个异步过程，这个方法的回调函数等到渲染结束后才执行(好像有一定道理，
+        //改变状态值不就是为了渲染视图，视图改变了才表示你改变状态成功了，所以才执行回调函数)；
+        //回调函数：在某种状态被触发时才执行的函数
+        //props对象和state对象的区别？
+        var LikeButton = React.createClass({
+            /*定义初始状态*/
+            getInitialState: function(){
+                return {liked: false};
+            },
+            /*事件触发状态改变*/
+            changeState: function(event){
+                //这个地方有点奇怪啊，改变了的值，却不能在这里立刻体现，而是慢一步才体现
+                //设置状态回调后的结果都慢于渲染的结果；而且设置状态后面的程序先执行
+                console.log(this.state.liked);
+                this.setState({liked: !this.state.liked},function(){
+                    console.log('have setStated!');
+                    console.log(this.state.liked);
+                });
+                //alert(1); //你是先执行
+                console.log(this.state.liked);  //你是先执行的
+            },
+            /*改变的状态值渲染界面*/
+            render: function(){
+                var text = this.state.liked ? '喜欢' : '不喜欢';
+                console.log(this.state.liked);
+                return <button onClick = {this.changeState}>点我切换喜欢状态：<b>{text}</b></button>;
+            }
+        });
+        
+        ReactDOM.render(
+            <LikeButton />,
+            document.getElementById('example')
+        );
+    </script>
+</body>
+
+</html>

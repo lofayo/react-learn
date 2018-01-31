@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>菜鸟教程 React 实例</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var Button = React.createClass({
+      	getInitialState: function(){
+      		return { data: 0 };
+      	},
+      	setNewNumber: function(){
+      		this.setState({data: this.state.data + 1})
+      	},
+      	render: function(){
+      		return (
+      			<div>
+    					<button onClick = {this.setNewNumber}>加1</button>
+    					<Content myNumber = {this.state.data} />
+    				</div>
+  				);
+      	}
+      });
+
+      var Content = React.createClass({
+
+      	componentWillMount: function(){
+      		console.log('Component will mount !');
+      	},
+
+      	componentDidMount: function(){
+      		console.log('Component did mount !');
+      	},
+
+      	//组件接收新属性，而不是初始属性
+        //一个组件改变的状态值赋给另一个组件的属性，导致属性跟随状态的改变
+      	componentWillReceiveProps: function(newProps){
+      		console.log('Component will receive props !');
+      	},
+
+      	shouldComponentUpdate: function(newProps, newState){
+      		console.log('Should component update ?');
+      		return true;
+      	},
+
+      	componentWillUpdate: function(newProps, newState){
+      		console.log('Component will update !');
+      	},
+
+      	componentDidUpdate: function(prevProps, prevState){
+      		console.log('Component did update !');
+      	},
+
+      	componentWillUnmount: function(){
+      		console.log('Component will unmount !');
+      	},
+
+      	render: function(){
+      		return (
+      			<div>
+  		        <h3>{this.props.myNumber}</h3>
+  				  </div>
+			    );
+      	}
+      });
+
+      ReactDOM.render(
+       	<div>
+        	<Button />
+        </div>,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

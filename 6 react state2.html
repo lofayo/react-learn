@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>6 react state</title>
+</head>
+
+<body>
+    <div id="example"></div>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script type="text/babel">
+        //组件，完整的系统。包含初始状态、事件触发对状态的改变、以及最后的渲染UI
+        //this.setState(updater[, callback]);updater可以是个函数: (prevState, props) => {stateChange}
+        //this.setState()里的updater可以是包含先前状态和属性的函数；也可以是改变状态的json对象
+        var ClickButton = React.createClass({
+            getDefaultProps: function(){
+              return { name: 'luofangyong'}  
+            },
+            /*定义初始状态*/
+            getInitialState: function(){
+                return {clickCount: 0};
+            },
+            /*事件触发状态改变*/
+            clickMe: function(event){
+                //this.setState({clickCount: this.state.clickCount+1});
+                this.setState(function(prevState){
+                    console.log('1 ' + prevState.clickCount);
+                    return {clickCount: prevState.clickCount+1}
+                }, function(){
+                    console.log('2 ' + this.state.clickCount);
+                });
+                
+                //this.setProps({name: 'lofayo'});
+            },
+            /*改变的状态值渲染界面*/
+            render: function(){
+                console.log('3 ' + this.state.clickCount);
+                return (
+                    <div>
+                        <p onClick={this.clickMe}>点击我。记录了点击了{this.state.clickCount}次</p>
+                        <p onClick = {this.clickMe}>点击我，添加了新属性。name: {this.props.name}</p>
+                    </div>
+                )
+            }
+        });
+        
+        ReactDOM.render(
+            <ClickButton />,
+            document.getElementById('example')
+        );
+    </script>
+</body>
+
+</html>

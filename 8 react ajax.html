@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>菜鸟教程 React 实例</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var AjaxData = React.createClass({
+        getInitialState: function(){
+          return {
+            name: '0',
+            age: '0'
+          };
+        },
+
+        componentDidMount: function() {
+          console.log('did mount');
+          fetch(this.props.url)
+            .then(res => res.json())
+            .then(
+              result => {
+                this.setState({
+                  name: result.name,
+                  age: result.age
+                })
+              }
+            )
+        },
+
+        componentWillUnmount: function() {
+          //this.serverRequest.abort();
+        },
+
+        render: function(){
+          return (
+            <div>
+              <h3>我是：{this.state.name}</h3>
+              <h3>今年：{this.state.age} 岁</h3>
+            </div>
+          );
+        },
+      });
+
+      ReactDOM.render(
+       	<div>
+        	<AjaxData url='data.json' />
+        </div>,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

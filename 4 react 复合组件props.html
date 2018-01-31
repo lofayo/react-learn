@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>4 react 复合组件</title>
+</head>
+
+<body>
+    <div id="example"></div>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script type="text/babel">
+        // 符合组件就是组件中套组件，并且统一的属性props对象从父组件传递到子组件
+        // name组件
+        var Name = React.createClass({
+            render: function(){
+                return <h1>Name组件：{this.props.name}</h1>
+            }
+        });
+        
+        // age组件
+        var Age = React.createClass({
+            render: function(){
+                return <h1>Age组件：{this.props.age}</h1>
+            }
+        });
+        
+        // 复合组件
+        var CombinedComponent = React.createClass({
+            render: function(){
+                return <p><Name name = {this.props.name} />, <Age age = {this.props.age} /></p>
+            }
+        });
+        
+        ReactDOM.render(
+            <CombinedComponent name = 'lofayo' age = '25' />,
+            document.getElementById('example')
+        );
+    </script>
+</body>
+
+</html>

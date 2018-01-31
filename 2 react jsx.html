@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>2 react style</title>
+</head>
+
+<body>
+    <div id="example"></div>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script type="text/babel">
+    /*
+      1、react中样式放在一个json变量中，样式值默认字符串，数字不用单位
+      2、可以将DOM节点存入数组变量
+      3、用大括号{}引用之前定义的变量，{}引用变量、计算表达式
+      4、react在DOM结构里提倡三目运算符代替if elss
+      5、HTML模板节点里的注释需要注意
+    */
+      var inlineStyle = {
+        fontSize: 30,
+        fontWeight: 900,
+        color: 'pink'
+      };
+      
+      var nodeArr = [
+        <h1>还没见过数组中放DOM节点</h1>,
+        <p>还没见过数组中放DOM节点</p>
+      ];
+      var nodeBox = <div>
+        <h1>hello world!</h1>
+        <h1>hello react learning</h1>
+        <p>i want to study react</p>
+        <p>表达式的计算放在大括号中，计算表达式的值{'undefined' || 0}</p>
+        <p>react 里没有if else 语法，用三目运算符代替：{ 0 == '0' ? '默认隐式类型转换' : '没有隐式类型转换' }</p>
+        <p style={inlineStyle}>react 默认提供内联样式书写形式，用一个变量来申明。而且样式值默认都是字符串，除了数字。</p>
+        {/*注释写在大括号中，而且只有在HTML节点包含的节点中才需要这样*/}
+        <p>注释的写法</p>
+        // fasf
+        <div>
+            表达式大括号中放一个节点数组： {nodeArr}
+        </div>
+      </div>;
+      ReactDOM.render(
+        /*注释写在大括号中*/
+        // 啊发顺丰
+        nodeBox,
+        document.getElementById('example')
+      );
+    </script>
+</body>
+
+</html>
