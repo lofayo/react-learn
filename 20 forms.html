@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>9 react 表单与事件</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      function FileInput(props) {
+        function handleSubmit(e) {
+          e.preventDefault();
+          alert(`Selected file - ${this.fileInput.files[0].name}`)
+        }
+        return (
+          <form onSubmit={handleSubmit}>
+            <label>
+              Upload file: 
+              <input
+               type='file'
+               ref={input => {
+                fileInput = input;
+               }}
+              /> 
+            </label>
+            <br />
+            <button type='submit'>submit</button>
+          </form>
+        )
+      }
+      ReactDOM.render(
+        <FileInput />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

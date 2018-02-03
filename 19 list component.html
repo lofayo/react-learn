@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      {/*
+        1、组件的思想还是很伟大的，前期先封装好，后期重复使用，只需要传入参数即可，效率会很高的
+        2、这种思想和函数一个道理，封装好一个功能函数，在需要的地方传入参数调用既可
+      */}
+      function List(props) {
+        let numbers = props.numbers;
+        let lists = numbers.map(value => <li key={value.toString()} id={value.toString()}>{value * 2}</li>);
+        return (
+          <ul>{lists}</ul>  
+        )
+      }
+
+      const numbers = [1,2,3,4,5];
+      ReactDOM.render(
+        <List numbers={numbers} />,
+        document.querySelector('#example')
+      )
+    </script>
+  </body>
+</html>
