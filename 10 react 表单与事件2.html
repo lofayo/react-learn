@@ -14,13 +14,18 @@
       {/*
         1、父组件中的属性、事件作为子组件的属性传入到子组件的渲染模板中
         2、父子组件本就一家，子组件根本不是把父组件事件函数与状态值保存一份副本，而是共享一套
+        3、子组件根本就不是保留一份父组件的状态值与事件函数，而是直接操作父组件的状态值与函数
+        4、第3条的实现多个子组件间内容的联动，其实都是在操作父组件的状态值与函数
       */}
       {/*子组件*/}
       var Content = React.createClass({
+        focus() {
+          console.log(this.state);//null
+        },
         render: function(){
           return (
             <div>
-              <input type = 'text' value = {this.props.valueProp} onChange = {this.props.eventProp} />  
+              <input type = 'text' onFocus={this.focus} value = {this.props.valueProp} onChange = {this.props.eventProp} />  
               <h3>{this.props.valueProp}</h3>
             </div>    
           );

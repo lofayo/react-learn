@@ -29,7 +29,10 @@
           return (
             <div>
               <input type='text' value = {this.state.value} onChange = {this.changeValue} />
-              {/*以下方式却不能输入*/}
+
+              {/*以下方式却不能输入
+                这句话给了个解释：Since handleChange runs on every keystroke to update the React state, the displayed value will update as the user types.
+              */}
               {/*<input type='text' value = 'please' onChange = {this.changeValue} />*/}
 
               {/*这样却可以*/}
