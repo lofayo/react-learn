@@ -1,7 +1,10 @@
 package com.rnapp;
 
+<<<<<<< HEAD
 import com.oblador.vectoricons.VectorIconsPackage;
 
+=======
+>>>>>>> b25a522790421dd084ffd5af60757e531c313950
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
@@ -25,7 +28,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage()
+<<<<<<< HEAD
           , new VectorIconsPackage()
+=======
+>>>>>>> b25a522790421dd084ffd5af60757e531c313950
       );
     }
 
