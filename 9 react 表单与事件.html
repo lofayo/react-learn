@@ -19,7 +19,7 @@
         
         //react事件中this的指向
         changeValue(event){
-          console.log(event.target.value);
+          console.log(this);
           this.setState({
             value: event.target.value
           });

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>1 react render</title>
+</head>
+
+<body>
+    <div id="example"></div>
+
+
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script type="text/babel">
+        
+        //这个程序的难点在于两点：
+        //1、状态值在组件里提升
+        //2、满足两个条件要求的逻辑代码
+
+        const products=[
+            {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
+            {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
+            {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
+            {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
+            {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
+            {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
+        ];  
+
+        
+        class ProductCategoryRow extends React.Component{
+            constructor(props){
+                super(props);
+            }
+
+            render() {
+                return(
+                    <tr>
+                        <th colSpan='2'>{this.props.category}</th>
+                    </tr>
+                )
+            }
+        }         
+        class ProductRow extends React.Component{
+            constructor(props){
+                super(props);
+            }
+
+            render() {
+                let name = !this.props.stocked
+                            ? <span style={{color: 'red'}}>this.props.name</span>
+                            : this.props.name
+                return(
+                    <tr>
+                        <td>{name}</td>
+                        <td>{this.props.price}</td>
+                    </tr>
+                )
+            }
+        }             
+        class ProductTable extends React.Component{
+            constructor(props){
+                super(props);
+            }
+
+            render() {
+                let prevCategory = '';
+                let showCategory = '';
+                let showProductRow = '';
+                // 这是渲染的结果集，是根据某些搜索条件生成的
+                const rows = this.props.products.map(item => {
+                    // 同名的产品类型只需要显示一次，跟搜索条件无关，只关系于自身数据
+                    if(item.category !== prevCategory) {
+                        showCategory = <ProductCategoryRow category={item.category} />;
+                        prevCategory = item.category;
+                    } else {
+                        showCategory = null;
+                    }
+
+                    // 显示产品行，默认都显示，但是却和搜索条件有关，而且是两个条件
+                    /*
+                    *   未选中复选框，数据全部展示：
+                    *                             满足搜索条件的显示  
+                    *                             不满足搜索条件的为null  
+                    *   
+                    *   选中复选框，根据item.stocked决定显示  
+                    *                            item.stocked == true的才显示，显示部分是否符合搜索条件  
+                    *                                                                   符合搜索条件的显示  
+                    *                                                                   不符合搜索条件的为null  
+                    *                            item.stocked == null的为null  
+                    *
+                    */
+                    // if (this.props.searchKey.isChecked === false) {
+                    //     if (item.name.search(this.props.searchKey.text) !== -1) {
+                    //         showProductRow = <ProductRow name={item.name} price={item.price} stocked={item.stocked} />
+                    //     } else {
+                    //         showProductRow = null;
+                    //     }
+                    // } else {
+                    //     if(item.stocked === true) {
+                    //         if(item.name.search(this.props.searchKey.text) !== -1) {
+                    //             showProductRow = <ProductRow name={item.name} price={item.price} stocked={item.stocked} />
+                    //         } else {
+                    //             showProductRow=null;
+                    //         }
+                    //     } else {
+                    //         showProductRow=null;
+                    //     }
+                    // }
+
+                    // 前后两种搜索比较，后者更少的代码，关键在于先判断决定性条件，先主后次
+                    // if (item.name.toLowerCase().search(this.props.searchKey.text) !== -1) {
+                    //     if (this.props.searchKey.isChecked === true) {
+                    //         if (item.stocked === true) {
+                    //             showProductRow = <ProductRow name={item.name} price={item.price} stocked={item.stocked} />
+                    //         } else {
+                    //             showProductRow=null;
+                    //         }
+                    //     } else {
+                    //         showProductRow = <ProductRow name={item.name} price={item.price} stocked={item.stocked} />
+                    //     }
+                    // } else {
+                    //     showProductRow=null;
+                    // }
+
+                    // 对上述再次改进，根据逻辑分析，将所有相同结果的放在一个判断条件里
+                    if(item.name.toLowerCase().search(this.props.searchKey.text) === -1 || (!item.stocked && this.props.searchKey.isChecked === true)) {
+                        showProductRow=null;    
+                    } else {
+                        showProductRow = <ProductRow name={item.name} price={item.price} stocked={item.stocked} />
+                    }
+
+                    return(
+                        <React.Fragment key={item.name}>
+                            {showCategory}
+                            {showProductRow}
+                        </React.Fragment>
+                    )
+                })
+                console.log(rows);
+                return(
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>name</th>
+                                <th>price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </table>
+                )
+            }
+        }         
+
+        class SearchBar extends React.Component{
+            constructor(props){
+                super(props);
+                
+            }
+            render() {
+                return(
+                    <form>
+                        <input type='text' value={this.props.searchKey.text} onChange={this.props.handleTextChange} />
+                        <br />
+                        <input type='checkbox' onClick={this.props.handleCheckChange} />{'  '} Only show products in stock
+                    </form>
+                )
+            }
+        }
+        class FilterableProductTable  extends React.Component{
+            constructor(props){
+                super(props);
+                this.state={
+                    text: '',   //用来实时保存输入框中的值
+                    isChecked: false    //保存CheckBox 的选中状态，后续根据是否库存来显示与隐藏
+                };
+                this.handleTextChange = this.handleTextChange.bind(this);
+                this.handleCheckChange = this.handleCheckChange.bind(this);
+
+            }
+
+            handleTextChange(e){
+                this.setState({
+                    text: e.target.value
+                }, () => console.log(this.state.text));
+            }
+
+            handleCheckChange(){
+                this.setState({
+                    isChecked: !this.state.isChecked
+                }, () => console.log(this.state.isChecked));
+            }
+
+            render() {
+                return(
+                    <div>
+                        <SearchBar searchKey={this.state} handleTextChange={this.handleTextChange} handleCheckChange={this.handleCheckChange} />
+                        <ProductTable products={this.props.product} searchKey={this.state} />
+                    </div>
+                )
+            }
+        }
+
+
+        ReactDOM.render(
+            <FilterableProductTable product={products} />,
+            document.getElementById('example')
+        );
+    </script>
+</body>
+
+</html>

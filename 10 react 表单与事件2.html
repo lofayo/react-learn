@@ -12,8 +12,9 @@
     <div id="example"></div>
     <script type="text/babel">
       {/*
-        1、父组件中的属性、事件作为子组件的属性传入到子组件的渲染模板中
+        1、组件中的属性值和事件属性就只是代名词，通过props对象传递到最原始的HTML对应属性中
         2、父子组件本就一家，子组件根本不是把父组件事件函数与状态值保存一份副本，而是共享一套
+        3、实现这样的双向绑定很简单（值是相同的联动），共享相同的状态值。但是要彼此间满足一定关系的联动呢？
       */}
       {/*子组件*/}
       var Content = React.createClass({
@@ -31,7 +32,7 @@
       var HelloMessage = React.createClass({
         getInitialState: function(){
           return {
-            value:0
+            value: 0
           }
         },
         //react事件中this的指向
@@ -45,7 +46,7 @@
           return (
             <div>
               <Content valueProp = {this.state.value} eventProp = {this.changeValue} />
-              <textarea value={this.state.value}>这是父组件的DOM元素</textarea>  
+              <textarea value={this.state.value} onChange={this.changeValue}></textarea>  
             </div>
           )
         }

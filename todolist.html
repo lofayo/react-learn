@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>13 todo list</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      class TodoList extends React.Component{
+        constructor(props) {
+          super(props)
+        }
+        render() {
+          // console.log(1); 
+            console.log(this.props.items);
+          return (
+            <ul>
+              {this.props.items.map(value => {
+                return (
+                  <li key={value.id}>{value.value}</li>
+                )
+              })}
+            </ul>  
+          )
+        }
+      }
+
+      class Todo extends React.Component{
+        constructor(props){
+          super(props);
+          this.state = {
+            item: [],
+            text: ''
+          };
+          this.handleChange = this.handleChange.bind(this);
+          this.addItem = this.addItem.bind(this);
+        }
+
+        handleChange(e) {
+          this.setState({
+            text: e.target.value
+          })
+        }
+        addItem() {
+          let content = {
+            value: this.state.text,
+            id: Date.now()
+          }
+          this.setState({
+            item: this.state.item.concat(content),
+            text: ''
+          })
+        }
+        render() {
+          return (
+            <div>
+              <h3>todolist</h3>
+              <form>
+                <input type='text' onChange={this.handleChange} value={this.state.text} />
+                <input type='button' onClick={this.addItem} value='add' />
+              </form>
+              <TodoList items={this.state.item} />
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(
+        <Todo />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

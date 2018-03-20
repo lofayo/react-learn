@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>菜鸟教程 React 实例</title>
+    <title>7 react组件生命周期</title>
     <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
     <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
     <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
@@ -12,11 +12,13 @@
     <script type="text/babel">
       var Button = React.createClass({
       	getInitialState: function(){
-      		return { data: 0 };
+      		return { data: 1 };
       	},
+
       	setNewNumber: function(){
       		this.setState({data: this.state.data + 1})
       	},
+
       	render: function(){
       		return (
       			<div>
@@ -30,27 +32,34 @@
       var Content = React.createClass({
 
       	componentWillMount: function(){
-      		console.log('Component will mount !');
+      		console.log('Component %cwill mount !', 'color:red');
       	},
 
       	componentDidMount: function(){
-      		console.log('Component did mount !');
+          console.log('Component did mount !');
+          // 初始属性已经跟随组件已加载而初始化了
+      		// console.log(this.props.myNumber);
       	},
 
       	//组件接收新属性，而不是初始属性
         //一个组件改变的状态值赋给另一个组件的属性，导致属性跟随状态的改变
         // 组件的属性与状态的改变都会促使组件再次渲染
       	componentWillReceiveProps: function(newProps){
-      		console.log('Component will receive props !');
+          // console.log()带样式的输出，样式前面配套的字符串只能是一个字符串，而不能多个
+      		console.log('Component will receive newProps !', 'newProps.myNumber is ' + newProps.myNumber);
       	},
 
       	shouldComponentUpdate: function(newProps, newState){
-      		console.log('Should component update ?');
+      		console.log(`Should component update ?, newProps.myNumber is ${newProps.myNumber}, newState is %c${newState}`, 'color:red');
+          
+          // 这个地方的返回值能决定组件是否该更新
       		return true;
       	},
 
       	componentWillUpdate: function(newProps, newState){
       		console.log('Component will update !');
+          // 能走到这个地方说明组件已经更新了，返回值不能决定是否更新
+          return false;
       	},
 
 
@@ -72,9 +81,7 @@
       });
 
       ReactDOM.render(
-       	<div>
-        	<Button />
-        </div>,
+        <Button />,
         document.getElementById('example')
       );
     </script>
